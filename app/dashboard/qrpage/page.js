@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import QRCode from 'qrcode.react';
 import NavbarMain from '../../../components/NavbarMain';
-import useWebSocket, { ReadyState } from "react-use-websocket";
 import axios from 'axios';
 
 const qrpage = () => {
@@ -23,54 +22,6 @@ const qrpage = () => {
     }
       ); 
     }, []);
-    // const [qrCode, setQrCode] = useState(null);
-    // useEffect(() => {
-    //     const socket = new WebSocket('ws://flipr-attendence-task-production.up.railway.app')
-
-        // socket.onopen = () => {
-        //     console.log('WebSocket connected');
-        //     socket.send('Hello WebSocket Server!');
-        // };
-        // socket.onmessage = (event) => {
-        //     setUrl(event.data);
-        //     console.log(`Received message from server: ${event.data}`);
-        // };
-
-        // socket.onclose = () => {
-        //     console.log('WebSocket disconnected');
-        // };
-    //     return () => {
-    //         socket.close();
-    //     };
-    // }, []);
-    //     const interval = setInterval(() => {
-    //         setQrCode(Math.random());
-    //         console.log(qrCode);
-    //     }, 5000);
-    //     return () => clearInterval(interval);
-
-    // const handleUrlChange = (event) => {
-    //     setUrl(event.target.value);
-    // };
-
-
-    // const WS_URL = "ws://flipr-attendence-task-production.up.railway.app";
-    // const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
-   
-    // useEffect(() => {
-    //    if (readyState === ReadyState.OPEN) {
-    //      sendJsonMessage("Hello World!");
-    //    }
-    // }, [readyState]);
-   
-    // useEffect(() => {
-    //    if (lastJsonMessage) {
-    //     setUrl(lastJsonMessage);
-    //      console.log(`Received message: ${JSON.stringify(lastJsonMessage)}`);
-    //    }
-    // }, [lastJsonMessage]);
-    // console.log(url)
-
     const [url, setUrl] = useState('');
     const [socket, setSocket] = useState(null);
 
@@ -93,15 +44,11 @@ const qrpage = () => {
          ws.close();
        };
     }, []);
-//    const [showQR, setShowQR] = useState(false);
     const sendMessage = () => {
        if (socket) {
          socket.send('Your message');
-        //  setShowQR(true);
-       }
-             
+       }         
     };
-    
 
     return (
         check ? (
