@@ -5,6 +5,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": ["lodash.memoize"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,

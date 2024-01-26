@@ -1,10 +1,28 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import QRCode from 'qrcode.react';
-import NavbarMain from '../../components/NavbarMain';
+import NavbarMain from '../../../components/NavbarMain';
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import axios from 'axios';
 
 const qrpage = () => {
+    const[True,setTrue] = useState(false);
+    useEffect( () => {
+      const cookieValue = document.cookie.split('=')[1];
+      const headers = {
+        Authorization: `Bearer ${cookieValue}`
+      }
+       axios.get("https://flipr-yi8b.onrender.com/api/test2",
+       {headers}
+       )
+        .then((response) => {
+          console.log("SUCCESS");
+          setTrue(true);})
+        .catch((error) => {
+          window.location.href = '/';    
+    }
+      ); 
+    }, []);
     // const [qrCode, setQrCode] = useState(null);
     // useEffect(() => {
     //     const socket = new WebSocket('ws://flipr-attendence-task-production.up.railway.app')
@@ -53,11 +71,11 @@ const qrpage = () => {
     // }, [lastJsonMessage]);
     // console.log(url)
 
-    const [url, setUrl] = useState('new');
+    const [url, setUrl] = useState('');
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-       const ws = new WebSocket('ws://flipr-attendence-task-production.up.railway.app');
+       const ws = new WebSocket('ws://flipr-yi8b.onrender.com');
    
        ws.onopen = () => {
          console.log('Connection established');
@@ -75,35 +93,33 @@ const qrpage = () => {
          ws.close();
        };
     }, []);
-   const [showQR, setShowQR] = useState(true);
+   const [showQR, setShowQR] = useState(false);
     const sendMessage = () => {
        if (socket) {
          socket.send('Your message');
-        //  setShowQR(true);
+         setShowQR(true);
        }
              
     };
     
 
     return (
+        True ? (
         <>
             <header>
                 <NavbarMain />
             </header>
             <main>
-                <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+                <div className="flex flex-col items-center justify-center h-[75vh] bg-gray-100">
                     <div className="shadow-md rounded-lg bg-white p-4">
-                        <h1 className="text-2xl font-bold mb-2">QR Code Generator</h1>
-                        {/* <label htmlFor="url" className="text-lg font-medium mb-2 block">Enter URL:</label> */}
-                        {/* <input type="text" id="url" name="url" value={url} onChange={handleUrlChange} className="w-full p-2 border border-gray-400 rounded-md mb-2" /> */}
-                        <button onClick={sendMessage} className=' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4 '>Show QR</button>
+                        <h1 className="text-2xl font-bold mb-2">Scan to mark attendance</h1>
                         <div className="flex justify-center items-center mb-4">
-                        {showQR ? <QRCode value={url} size={200}/> :<div></div> }
+                        {(url==='WAIT FOR ONE MINUTE' || url===''?(<p>WAIT FOR ONE MINUTE</p>): <QRCode value={url} size={200}/>) }
                         </div>
                     </div>
                 </div>
             </main>
-        </>
+        </>) : <></>
     )
 }
 

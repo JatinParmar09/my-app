@@ -9,11 +9,9 @@ function Pagination({ totalStudents, studentsPerPage, currentPage, onPageChange 
     // Ensure page value stays within valid range
     page = Math.max(1, Math.min(page, totalPages));
     onPageChange(page);
-    router.push(`/dashboard/studentlist?page=${page}`); // Client-side navigation
+    router.push(`/dashboard/studentlist`);
   };
-//   useEffect(() => {
-//     // Fetch student data if needed (replace with your data fetching logic)
-//   }, []);
+
 
   return (
     <div className="flex justify-between mt-4">

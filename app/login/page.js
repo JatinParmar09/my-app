@@ -1,77 +1,82 @@
-// "use client";
+"use client";
 // import Image from "next/image";
 import Navbar from "../../components/Navbar";
-import LoginForm from "../../components/LoginForm"
+import LoginForm from "../../components/LoginForm";
+import Footer from "../../components/Footer";
+import { useRouter } from "next/navigation";
 // import { useState } from "react";
 // import { useRouter } from "next/navigation";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import axios from "axios";
-export default function login() {
-//   const [email, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const router = useRouter();
-//   const handleSuccess = () => {
-//     toast.success("Login successful!", {
-//       position: "top-right",
-//       autoClose: 3000,
-//       hideProgressBar: false,
-//       closeOnClick: true,
-//       pauseOnHover: true,
-//       draggable: true,
-//       progress: undefined,
-//     });
-//   };
+export default function login({searchParams}) {
+  // const router = useRouter();
+// const data = router.query;
+console.log("data ",searchParams);
+  //   const [email, setUsername] = useState("");
+  //   const [password, setPassword] = useState("");
+  //   const router = useRouter();
+  //   const handleSuccess = () => {
+  //     toast.success("Login successful!", {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //     });
+  //   };
 
-//   const handleError = () => {
-//     toast.error("Login failed. Invalid credentials.", {
-//       position: "top-right",
-//       autoClose: 3000,
-//       hideProgressBar: false,
-//       closeOnClick: true,
-//       pauseOnHover: true,
-//       draggable: true,
-//       progress: undefined,
-//     });
-//   };
+  //   const handleError = () => {
+  //     toast.error("Login failed. Invalid credentials.", {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //     });
+  //   };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
 
-//     try {
-//       // Send login credentials to your backend for authentication using Axios
-//       console.log(email)
-//       const response = await axios.post(
-//         "http://flipr-attendence-task-production.up.railway.app/auth/admin_login",
-//         {
-//           email,
-//           password,
-//         }
-//       );
-//       if (response.status === 200) {
-//         // Redirect to another page with login information
-//         router.push({
-//           pathname: "/dashboard",
-//           query: { email }, // Pass additional data as query parameters
-//         });
+  //     try {
+  //       // Send login credentials to your backend for authentication using Axios
+  //       console.log(email)
+  //       const response = await axios.post(
+  //         "http://flipr-attendence-task-production.up.railway.app/auth/admin_login",
+  //         {
+  //           email,
+  //           password,
+  //         }
+  //       );
+  //       if (response.status === 200) {
+  //         // Redirect to another page with login information
+  //         router.push({
+  //           pathname: "/dashboard",
+  //           query: { email }, // Pass additional data as query parameters
+  //         });
 
-//         // Show success toast
-//         handleSuccess();
-//       } else {
-//         // Handle login error
-//         console.error("Login failed");
+  //         // Show success toast
+  //         handleSuccess();
+  //       } else {
+  //         // Handle login error
+  //         console.error("Login failed");
 
-//         // Show error toast
-//         handleError();
-//       }
-//     } catch (error) {
-//       // Handle network or other errors
-//       console.error("Login failed", error);
+  //         // Show error toast
+  //         handleError();
+  //       }
+  //     } catch (error) {
+  //       // Handle network or other errors
+  //       console.error("Login failed", error);
 
-//       // Show error toast
-//       handleError();
-//     }
-//   };
+  //       // Show error toast
+  //       handleError();
+  //     }
+  //   };
 
   return (
     <>
@@ -79,8 +84,12 @@ export default function login() {
         <Navbar />
       </header>
       <main>
-        <LoginForm/>
-        {/* <div className=" flex flex-row h-[80vh] align-middle content-center justify-around items-center">
+        <LoginForm value={searchParams.admin} />
+      </main>
+      {/* <footer>
+        <Footer />
+      </footer> */}
+      {/* <div className=" flex flex-row h-[80vh] align-middle content-center justify-around items-center">
           <Image
             src={"/login.svg"}
             alt="Picture of the author"
@@ -146,8 +155,7 @@ export default function login() {
             </p>
           </div>
         </div> */}
-        {/* <ToastContainer /> */}
-      </main>
+      {/* <ToastContainer /> */}
     </>
   );
 }

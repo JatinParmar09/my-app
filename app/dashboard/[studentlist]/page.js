@@ -2,45 +2,70 @@
 import axios from 'axios';
 import StudentList from "../../../components/StudentList";
 import StudentForm from "../../../components/StudentForm";
-import Pagination from "../../../components/Pagination";
-import students from "../../data";
 import { useRouter } from "next/navigation";
-import Router from "next/router";
 import React, { useState, useEffect } from 'react';
 import { MdOutlineSearch } from "react-icons/md";
-import Navbar from '../../../components/Navbar';
 import NavbarMain from '../../../components/NavbarMain';
+
 const studentlist = () => {
+
+
+  const[True,setTrue] = useState(false);
+  useEffect( () => {
+    const cookieValue = document.cookie.split('=')[1];
+    const headers = {
+      Authorization: `Bearer ${cookieValue}`
+    }
+     axios.get("https://flipr-yi8b.onrender.com/api/test2",
+     {headers}
+     )
+      .then((response) => {
+        console.log("SUCCESS");
+        setTrue(true);})
+      .catch((error) => {
+        window.location.href = '/';    
+  }
+    ); 
+  }, []);
+  
+  const [data, setData] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+       try {
+         const response = await axios.get('https://flipr-yi8b.onrender.com/api/all_students');
+        //  console.log(response.data.results);
+         setData(response.data.results);
+       } catch (error) {
+         console.error('Error fetching data:', error);
+       }
+    };
+    fetchData();
+   }, []);
+   
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const studentsPerPage = 5;
   const router = useRouter();
-  // useEffect(() => {
-  //   const initialPage = router.query?.page ? Number(router.query?.page) : 1;
-  //   setCurrentPage(initialPage);
-  // }, [router.query?.page])
-  // const handlePageChange = (newPage) => {
-  //   setCurrentPage(newPage);
-  // };
+
   useEffect(() => {
-    const initialPage = Number(router.query?.page) || 1; // Handle undefined directly
+    const initialPage = Number(router.query?.page) || 1;
     setCurrentPage(initialPage);
   }, [router.query?.page]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    router.push(`/studentlist`); // Update URL for client-side navigation
+    router.push(`/studentlist`); 
   };
-
-  // useEffect(() => {
-  //   console.log(router.query?.page);
-  // }, []);
-
-  const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStudents = data?.filter((students) =>
+    students.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+
+
   const [isFormShown, setIsFormShown] = useState(false);
   return (
+    True ? (
     isFormShown ? (
     <>
     <StudentForm setIsFormShown={setIsFormShown}/> 
@@ -73,15 +98,6 @@ const studentlist = () => {
             Add New Student
           </button>
         </div>
-        {/* <div className="mb-4">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search by name"
-          className="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div> */}
         <StudentList
           students={filteredStudents}
           studentsPerPage={studentsPerPage}
@@ -91,7 +107,7 @@ const studentlist = () => {
       </div>
       </main>
       <footer></footer>
-  </>
+  </>) : <></>
   )
 }
 
