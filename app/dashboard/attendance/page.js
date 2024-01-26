@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import NavbarMain from '../../../components/NavbarMain'
 import AttendanceManagement from '../../../components/AttendanceManagement'
 import axios from 'axios'
-const attendance = () => {
+const Attendance = () => {
   const[True,setTrue] = useState(false);
   useEffect( () => {
     const cookieValue = document.cookie.split('=')[1];
@@ -34,4 +34,4 @@ const attendance = () => {
   )
 }
 
-export default attendance
+export default Attendance

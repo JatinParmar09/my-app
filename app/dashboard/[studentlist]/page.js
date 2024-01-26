@@ -1,13 +1,13 @@
 'use client'
 import axios from 'axios';
-import StudentList from "../../../components/StudentList";
+import Studentlist from "../../../components/Studentlist";
 import StudentForm from "../../../components/StudentForm";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from 'react';
 import { MdOutlineSearch } from "react-icons/md";
 import NavbarMain from '../../../components/NavbarMain';
 
-const studentlist = () => {
+const StudentList = () => {
 
 
   const[True,setTrue] = useState(false);
@@ -98,7 +98,7 @@ const studentlist = () => {
             Add New Student
           </button>
         </div>
-        <StudentList
+        <Studentlist
           students={filteredStudents}
           studentsPerPage={studentsPerPage}
           currentPage={currentPage}
@@ -111,4 +111,4 @@ const studentlist = () => {
   )
 }
 
-export default studentlist
+export default StudentList

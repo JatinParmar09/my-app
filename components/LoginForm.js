@@ -103,7 +103,7 @@ const LoginForm = ({value}) => {
           dispatch(setValidationError(''));
           localStorage.setItem('UserID', JSON.stringify(response.data.userID));
           localStorage.setItem('username', JSON.stringify(response.data.name));
-          document.cookie = `token=${response.data.token}; HttpOnly:  SameSite=None; Secure;`;
+          document.cookie = `token=${response.data.accessToken}; HttpOnly:  SameSite=None; Secure;`;
           // Show success toast
           handleSuccess();
         } else {
