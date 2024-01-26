@@ -105,7 +105,7 @@ const scanner = () => {
             console.log(typeof(result));
             handleSuccess();
             // Send the result to the backend
-            axios.post("https://flipr-yi8b.onrender.com/api/student_id", {
+            axios.post("https://flipr-yi8b.onrender.com/api/mark_attendance", {
               student_id: userid,
               qr_id: result
             }).then((response) => {console.log("Success")})
