@@ -4,12 +4,18 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const ResetPassword = () => {
+
+  function getTokenFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('token');
+  }
+  const token = getTokenFromURL();
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://flipr-yi8b.onrender.com/api/reset-password', { password });
+      const response = await axios.post('https://flipr-yi8b.onrender.com/api/reset-password', { token, password });
       console.log(response.data); 
       toast.success('Password reset successful!');
     } catch (error) {

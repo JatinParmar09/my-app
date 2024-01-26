@@ -7,10 +7,11 @@ export default function forgotpassword() {
   const showToast = (e) => {
     e.preventDefault();
     axios.post("https://flipr-yi8b.onrender.com/api/email", {
-        email: e.target.name.value,
+        email: e.target.elements.name.value,
       })
       .then((response) => {
-        toast.success(response.message, {
+        // console.log(response.data);
+        toast.success(response.data.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -21,6 +22,7 @@ export default function forgotpassword() {
         });
       })
       .catch((error) => {
+        console.log(error);
         toast.error(error.message, {
           position: "top-right",
           autoClose: 5000,
@@ -40,7 +42,7 @@ export default function forgotpassword() {
         <Navbar />
       </div>
       <ToastContainer />
-      <div className="grid place-items-center h-screen">
+      <div className="grid place-items-center h-[75vh]">
         <div className="flex flex-col items-center justify-center bg-white w-96 h-fit rounded-md shadow-lg">
           <form
             onSubmit={showToast}
