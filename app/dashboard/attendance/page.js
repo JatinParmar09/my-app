@@ -21,6 +21,7 @@ const Attendance = () => {
   }
     ); 
   }, []);
+
   return (
     check ? (
     <>

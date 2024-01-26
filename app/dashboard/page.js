@@ -86,7 +86,6 @@ useEffect(() => {
   //     return null;
   //   }
   // }
-  console.log(True);
   return (
     check ? (
     <>

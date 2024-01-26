@@ -20,7 +20,7 @@ export const StudentDashboardPage = () => {
           console.log("SUCCESS");
           setCheck(true);})
         .catch((error) => {
-          window.location.href = '/';    
+          window.location.href = '/';   
     }
       ); 
     }, []);

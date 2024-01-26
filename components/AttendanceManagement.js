@@ -1,15 +1,31 @@
 'use client'
-import { useState, React } from 'react';
+import { useState, React, useEffect } from 'react';
 import {DayPicker} from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
+import axios from 'axios';
 const AttendanceManagement = () => {
+
+const [selectedDay, setSelectedDay] = useState(format(new Date(), 'yyyy-MM-dd'));
+  const [studentsList, setStudentsList] = useState([]);
+  useEffect(() => {
+    const now = new Date();
+ const formattedDate = format(now, 'yyyy-MM-dd');
+    axios.post('https://flipr-yi8b.onrender.com/api/day_attendance',{ date: format(selectedDay, 'yyyy-MM-dd')})
+      .then(response => {
+        setStudentsList(response.data.results);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, [selectedDay]);
+
   const dummyRecords = [
    { id: 1, name: 'John Doe', date: '2024-01-23', status: 'Present' },
    { id: 2, name: 'Jane Smith', date: '2024-01-23', status: 'Absent' },
    // Add more dummy records as needed
   ];
-   const [selectedDay, setSelectedDay] = useState(null);
    const [records, setRecords] = useState(dummyRecords);
   
    // This function will be called when a day is selected
@@ -17,7 +33,7 @@ const AttendanceManagement = () => {
       setSelectedDay(day);
    };
    const formattedSelectedDay = selectedDay ? format(selectedDay, 'yyyy-MM-dd') : null;
-   const filteredRecords = selectedDay ? records.filter(record => record.date === formattedSelectedDay) : [];
+  //  const filteredRecords = selectedDay ? studentsList.filter(record => record.date === formattedSelectedDay) : [];
   return (
     <>
 
@@ -33,10 +49,10 @@ const AttendanceManagement = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {filteredRecords.map((record) => (
-            <tr key={record.id}>
-              <td className="px-6 py-4 whitespace-nowrap">{record.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{record.date}</td>
+          {studentsList.map((record) => (
+            <tr key={record.student_id}>
+              <td className="px-6 py-4 whitespace-nowrap">{record.student_id}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{format(record.date, 'yyyy-MM-dd')}</td>
               <td className="px-6 py-4 whitespace-nowrap">{record.status}</td>
             </tr>
           ))}
