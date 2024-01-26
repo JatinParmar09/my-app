@@ -9,7 +9,7 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/reset-password', { password });
+      const response = await axios.post('https://flipr-yi8b.onrender.com/api/reset-password', { password });
       console.log(response.data); 
       toast.success('Password reset successful!');
     } catch (error) {

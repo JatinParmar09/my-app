@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Navbar from "../../components/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -46,19 +46,19 @@ export default function forgotpassword() {
             onSubmit={showToast}
             className="flex flex-col gap-4 m-0 p-3 w-96"
           >
-            <label>
-              Email:
+            <label htmlFor="name">
+              Email
+              </label>
               <input
                 className="block w-full rounded-md border-0 p-1 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 placeholder="Enter your e-mail"
                 type="email"
                 name="name"
+                id="name"
               />
-            </label>
             <button
               type="submit"
-              className="bg-[#4154F1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
+              className="bg-[#4154F1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Confirm!
             </button>
           </form>
