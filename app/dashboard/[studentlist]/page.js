@@ -8,10 +8,10 @@ import { MdOutlineSearch } from "react-icons/md";
 import NavbarMain from "../../../components/NavbarMain";
 
 const StudentList = () => {
-  const [check, setCheck] = useState(false);
-  const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [useCheck, setUseCheck] = useState(false);
+  const [useData, setUseData] = useState([]);
+  const [useSearchQuery, setUseSearchQuery] = useState("");
+  const [useCurrentPage, setUseCurrentPage] = useState(1);
   const [isFormShown, setIsFormShown] = useState(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const StudentList = () => {
       .get("https://flipr-yi8b.onrender.com/api/test2", { headers })
       .then((response) => {
         console.log("SUCCESS");
-        setCheck(true);
+        setUseCheck(true);
       })
       .catch((error) => {
         window.location.href = "/";
@@ -37,7 +37,7 @@ const StudentList = () => {
           "https://flipr-yi8b.onrender.com/api/all_students"
         );
         //  console.log(response.data.results);
-        setData(response.data.results);
+        setUseData(response.data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -49,18 +49,18 @@ const StudentList = () => {
 
   useEffect(() => {
     const initialPage = Number(router.query?.page) || 1;
-    setCurrentPage(initialPage);
+    setUseCurrentPage(initialPage);
   }, [router.query?.page]);
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    setUseCurrentPage(newPage);
     router.push(`/studentlist`);
   };
-  const filteredStudents = data?.filter((students) =>
-    students.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStudents = useData?.filter((students) =>
+    students.name.toLowerCase().includes(useSearchQuery.toLowerCase())
   );
 
-  return check ? (
+  return useCheck ? (
     isFormShown ? (
       <>
         <StudentForm setIsFormShown={setIsFormShown} />
@@ -84,8 +84,8 @@ const StudentList = () => {
                 </div>
                 <input
                   type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  value={useSearchQuery}
+                  onChange={(e) => setUseSearchQuery(e.target.value)}
                   className="block  rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   placeholder="Search by Name"
                 />
@@ -100,7 +100,7 @@ const StudentList = () => {
             <Studentlist
               students={filteredStudents}
               studentsPerPage={studentsPerPage}
-              currentPage={currentPage}
+              currentPage={useCurrentPage}
               onPageChange={handlePageChange}
             />
           </div>

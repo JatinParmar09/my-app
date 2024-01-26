@@ -6,7 +6,7 @@ import axios from "axios";
 export default function forgotpassword() {
   const showToast = (e) => {
     e.preventDefault();
-    axios.post("https://flipr-yi8b.onrender.com/auth/email", {
+    axios.post("https://flipr-yi8b.onrender.com/api/email", {
         email: e.target.name.value,
       })
       .then((response) => {
