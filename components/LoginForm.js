@@ -10,7 +10,7 @@ import Footer from "./Footer";
 import { UseDispatch, useDispatch } from "react-redux";
 import { setUserData, setAuthStatus, setValidationError } from '../app/actions';
 const LoginForm = ({value}) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();

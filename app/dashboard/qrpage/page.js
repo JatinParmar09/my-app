@@ -6,7 +6,7 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 import axios from 'axios';
 
 const qrpage = () => {
-    const[True,setTrue] = useState(false);
+    const[check,setCheck] = useState(false);
     useEffect( () => {
       const cookieValue = document.cookie.split('=')[1];
       const headers = {
@@ -17,7 +17,7 @@ const qrpage = () => {
        )
         .then((response) => {
           console.log("SUCCESS");
-          setTrue(true);})
+          setCheck(true);})
         .catch((error) => {
           window.location.href = '/';    
     }
@@ -93,18 +93,18 @@ const qrpage = () => {
          ws.close();
        };
     }, []);
-   const [showQR, setShowQR] = useState(false);
+//    const [showQR, setShowQR] = useState(false);
     const sendMessage = () => {
        if (socket) {
          socket.send('Your message');
-         setShowQR(true);
+        //  setShowQR(true);
        }
              
     };
     
 
     return (
-        True ? (
+        check ? (
         <>
             <header>
                 <NavbarMain />

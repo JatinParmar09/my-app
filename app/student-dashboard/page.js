@@ -7,7 +7,7 @@ import NavbarMain from "../../components/NavbarMain";
 import { UseSelector, useSelector } from "react-redux";
 export const StudentDashboardPage = () => {
 
-    const[True,setTrue] = useState(false);
+    const[check,setCheck] = useState(false);
     useEffect( () => {
       const cookieValue = document.cookie.split('=')[1];
       const headers = {
@@ -18,7 +18,7 @@ export const StudentDashboardPage = () => {
        )
         .then((response) => {
           console.log("SUCCESS");
-          setTrue(true);})
+          setCheck(true);})
         .catch((error) => {
           window.location.href = '/';    
     }
@@ -78,7 +78,7 @@ export const StudentDashboardPage = () => {
     //   }, []);
 
     return (
-        True ? (
+        check ? (
         <>
             <header className="">
                 <NavbarMain />

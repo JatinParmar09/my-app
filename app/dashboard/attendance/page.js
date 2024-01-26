@@ -4,7 +4,7 @@ import NavbarMain from '../../../components/NavbarMain'
 import AttendanceManagement from '../../../components/AttendanceManagement'
 import axios from 'axios'
 const Attendance = () => {
-  const[True,setTrue] = useState(false);
+  const[check,setCheck] = useState(false);
   useEffect( () => {
     const cookieValue = document.cookie.split('=')[1];
     const headers = {
@@ -15,14 +15,14 @@ const Attendance = () => {
      )
       .then((response) => {
         console.log("SUCCESS");
-        setTrue(true);})
+        setCheck(true);})
       .catch((error) => {
         window.location.href = '/';    
   }
     ); 
   }, []);
   return (
-    True ? (
+    check ? (
     <>
     <header>
         <NavbarMain/>

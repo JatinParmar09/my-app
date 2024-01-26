@@ -12,7 +12,7 @@ export const DashboardPage = () => {
   // console.log(user);
   // const token = cookies.get('token');
 
-  const[True,setTrue] = useState(false);
+  const[check,setCheck] = useState(false);
   useEffect( () => {
     const cookieValue = document.cookie.split('=')[1];
     const headers = {
@@ -23,7 +23,7 @@ export const DashboardPage = () => {
      )
       .then((response) => {
         console.log("SUCCESS");
-        setTrue(true);})
+        setCheck(true);})
       .catch((error) => {
         window.location.href = '/';    
   }
@@ -88,7 +88,7 @@ useEffect(() => {
   // }
   console.log(True);
   return (
-    True?(
+    check ? (
     <>
       <header className="">
         <NavbarMain />

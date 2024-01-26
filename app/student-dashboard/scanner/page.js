@@ -10,7 +10,7 @@ import axios from 'axios';
 // import { QrReader } from 'react-qr-reader';
 const scanner = () => {
 
-  const[True,setTrue] = useState(false);
+  const[check,setCheck] = useState(false);
   useEffect( () => {
     const cookieValue = document.cookie.split('=')[1];
     const headers = {
@@ -21,7 +21,7 @@ const scanner = () => {
      )
       .then((response) => {
         console.log("SUCCESS");
-        setTrue(true);})
+        setCheck(true);})
       .catch((error) => {
         console.log("ERROR");
         window.location.href = '/';    
@@ -126,7 +126,7 @@ const scanner = () => {
     };
   }, []);
   return (
-    True ? (
+    check ? (
     <>
      <ToastContainer />
       {/* <div className="p-4">
