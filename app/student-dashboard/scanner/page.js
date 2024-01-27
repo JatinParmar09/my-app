@@ -1,7 +1,6 @@
 'use client'
 import { React, useEffect, useState, useRef } from 'react'
 import QRScanner from 'qr-scanner';
-import CameraUtils from '@mediapipe/camera_utils';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
@@ -82,7 +81,7 @@ const Scanner = () => {
         scanner.destroy();
       }
     };
-  }, []);
+  }, [handleSuccess, hasScanned]);
   return (
     check ? (
     <>
