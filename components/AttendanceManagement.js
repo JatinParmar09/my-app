@@ -38,8 +38,10 @@ const [selectedDay, setSelectedDay] = useState(format(new Date(), 'yyyy-MM-dd'))
     <>
 
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Attendance Management</h1>
+      <div className='flex flex-col justify-center items-center'>
+        <h1 className="text-2xl font-bold mb-4 text-center w-screen">Attendance Management</h1>
       <DayPicker selected={selectedDay} onDayClick={handleDayClick} />
+        </div>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
