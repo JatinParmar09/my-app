@@ -1,5 +1,5 @@
 import Pagination from "./Pagination";
-function Studentlist({ students, studentsPerPage, currentPage, onPageChange }) {
+function StudentsList({ students, studentsPerPage, currentPage, onPageChange }) {
   const startIndex = (currentPage - 1) * studentsPerPage;
   const endIndex = Math.min(startIndex + studentsPerPage, students.length);
   const currentStudents = students.slice(startIndex, endIndex);
@@ -36,4 +36,4 @@ function Studentlist({ students, studentsPerPage, currentPage, onPageChange }) {
   );
 }
 
-export default Studentlist;
+export default StudentsList;

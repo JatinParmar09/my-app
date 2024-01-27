@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import Studentlist from "../../../components/Studentlist";
+import Studentlist from "../../../components/StudentsList";
 import StudentForm from "../../../components/StudentForm";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
