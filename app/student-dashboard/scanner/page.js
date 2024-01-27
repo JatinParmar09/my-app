@@ -68,7 +68,11 @@ const Scanner = () => {
     const userid = parseInt(localStorage.getItem('UserID'));
     console.log(userid, typeof(userid));
     async function startScanner() {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: {
+          facingMode: 'environment'
+        }
+     });
       const videoElem = videoRef.current; // Add this line to define videoElem
       if (videoElem) {
         videoElem.srcObject = stream;
