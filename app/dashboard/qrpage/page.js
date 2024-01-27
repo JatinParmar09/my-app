@@ -27,7 +27,7 @@ const QRPage = () => {
   }, []);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://flipr-yi8b.onrender.com');
+    const ws = new WebSocket('wss://flipr-yi8b.onrender.com');
 
     ws.onopen = () => {
       console.log('Connection established');
