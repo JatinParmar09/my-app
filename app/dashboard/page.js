@@ -7,6 +7,7 @@ import NavbarMain from '../../components/NavbarMain';
 import { UseSelector, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 export const DashboardPage = () => {
+  // eslint-disable-next-line react/no-unescaped-entities
   const [error, setError] = useState(null);
   const user = useSelector(state => state.user);
   const[check,setCheck] = useState(false);
