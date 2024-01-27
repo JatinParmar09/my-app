@@ -5,12 +5,26 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavbarMain from '../../components/NavbarMain';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 const StudentDashboardPage = () => {
     const [sPresent, setSPresent] = useState(0);
     const[check,setCheck] = useState(false);
     const [error, setError] = useState(null);
     const [sAbsent, setSAbsent] = useState(0);
-    const userid = parseInt(localStorage.getItem('UserID'));
+    // const userid = parseInt(localStorage.getItem('UserID'));
+    const [userid, setUserid] = useState(0);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedUserId = localStorage.getItem('UserID');
+            if (storedUserId) {
+                setUserid(parseInt(storedUserId));
+            } else {
+                router.push('/login');
+            }
+        }
+    }, []);
     useEffect( () => {
         const cookieValue = document.cookie.split('=')[1];
       const headers = {
@@ -37,7 +51,7 @@ const StudentDashboardPage = () => {
         axios.post('https://flipr-yi8b.onrender.com/api/present_student',{student_id: userid})
             .then(response => {
                 setSPresent(response.data.totalPresent);
-                // console.log(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
