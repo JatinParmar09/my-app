@@ -29,7 +29,23 @@ const Scanner = () => {
   const router = useRouter();
   const [hasScanned, setHasScanned] = useState(false);
   const videoRef = useRef();
-  const handleSuccess = () => {
+  // const handleSuccess = () => {
+  //   toast.success('QR Code scan successful!', {
+  //      position: 'top-right',
+  //      autoClose: 3000,
+  //      hideProgressBar: false,
+  //      closeOnClick: true,
+  //      pauseOnHover: true,
+  //      draggable: true,
+  //      progress: undefined,
+  //   });
+  //   setTimeout(() => {
+  //     router.push('/student-dashboard');
+  //     toast.dismiss();
+  //     setHasScanned(true);
+  //  }, 4000);
+  //  };
+  const handleSuccess = useCallback(() => {
     toast.success('QR Code scan successful!', {
        position: 'top-right',
        autoClose: 3000,
@@ -44,7 +60,7 @@ const Scanner = () => {
       toast.dismiss();
       setHasScanned(true);
    }, 4000);
-   };
+}, []);
    
   useEffect(() => {
     let scanner;
