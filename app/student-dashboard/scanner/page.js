@@ -48,7 +48,7 @@ const Scanner = () => {
   const handleSuccess = useCallback(() => {
     toast.success('QR Code scan successful!', {
        position: 'top-right',
-       autoClose: 3000,
+       autoClose: 2000,
        hideProgressBar: false,
        closeOnClick: true,
        pauseOnHover: true,
@@ -59,7 +59,7 @@ const Scanner = () => {
       router.push('/student-dashboard');
       toast.dismiss();
       setHasScanned(true);
-   }, 4000);
+   }, 2000);
 }, []);
    
   useEffect(() => {
