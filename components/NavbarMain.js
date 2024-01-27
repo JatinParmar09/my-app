@@ -26,8 +26,8 @@ const NavbarMain = () => {
                 <div>
                     <span className=' font-extrabold'>EDU</span>sync
                 </div>
-                <div className='hidden md:block'>
-                <Menu as="div" className="relative ml-3 mr-3 flex  justify-center content-center place-items-center gap-2 ">
+                <div className=''>
+                <Menu as="div" className=" relative ml-3 mr-3 flex  justify-center content-center place-items-center gap-2 ">
                 <p className=' text-sm text-slate-900 font-medium'>{name}</p>
                     <div>
                         <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
