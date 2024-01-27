@@ -9,9 +9,6 @@ import { format } from 'date-fns';
 export const DashboardPage = () => {
   const [error, setError] = useState(null);
   const user = useSelector(state => state.user);
-  // console.log(user);
-  // const token = cookies.get('token');
-
   const[check,setCheck] = useState(false);
   useEffect( () => {
     const cookieValue = document.cookie.split('=')[1];
@@ -29,9 +26,6 @@ export const DashboardPage = () => {
   }
     ); 
   }, []);
-
-// console.log("cookie data", cookieValue);
-// console.log("token", document.cookie);
 const [data, setData] = useState(0);
 useEffect(() => {
     const cookieValue = document.cookie.split('=')[1];
@@ -79,13 +73,6 @@ useEffect(() => {
       });
   }, []);
   console.log("presentStudents",typeof(presentStudents));
-  // const router = useRouter();
-  // if(!True){
-  //   if (!True) {
-  //     window.location.href = '/';
-  //     return null;
-  //   }
-  // }
   return (
     check ? (
     <>
@@ -132,7 +119,7 @@ useEffect(() => {
           </div>
         </div>
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-          <Link href="/dashboard/studentlist">
+          <Link href='/dashboard/studentlist'>
             <p className="bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden">
               <span>Student Management</span>
               <svg
@@ -151,7 +138,7 @@ useEffect(() => {
               </svg>
             </p>
           </Link>
-          <Link href="/dashboard/attendance">
+          <Link href='/dashboard/attendance'>
             <p className="bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden">
               <span>Attendance Management</span>
               <svg
@@ -170,7 +157,7 @@ useEffect(() => {
               </svg>
             </p>
           </Link>
-          <Link href="/dashboard/qrpage">
+          <Link href='/dashboard/qrpage'>
             <p className="bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden">
               <span>Generate QR Code</span>
               <svg
