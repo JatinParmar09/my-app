@@ -1,4 +1,4 @@
-/* eslint-disable-next-line react/no-unescaped-entities */
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 // import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -185,4 +185,3 @@ useEffect(() => {
 };
 
 export default DashboardPage;
-/* eslint-disable-next-line react/no-unescaped-entities */
