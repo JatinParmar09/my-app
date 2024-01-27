@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from 'next/navigation';
 const ResetPassword = () => {
-
+  const router = useRouter();
   function getTokenFromURL() {
+    if (typeof window !== "undefined") {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('token');
+    }
   }
   const token = getTokenFromURL();
   const [password, setPassword] = useState('');
