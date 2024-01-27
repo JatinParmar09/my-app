@@ -41,10 +41,10 @@ const StudentDashboardPage = () => {
     }
       ); 
     }, []);
-    const user = useSelector(state => state.user);
-    const headers = {
-        Authorization: `Bearer ${user.token}`,
-    };
+    // const user = useSelector(state => state.user);
+    // const headers = {
+    //     Authorization: `Bearer ${user.token}`,
+    // };
 
 
     useEffect(() => {
@@ -56,18 +56,18 @@ const StudentDashboardPage = () => {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+            axios.post('https://flipr-yi8b.onrender.com/api/absent_student',{student_id: userid})
+                .then(response => {
+                    setSAbsent(response.data.totalAbsent);
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
     }, [userid]);
 
-    useEffect(() => {
-        axios.post('https://flipr-yi8b.onrender.com/api/absent_student',{student_id: userid})
-            .then(response => {
-                setSAbsent(response.data.totalAbsent);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, [userid]);
+    // useEffect(() => {
+    // }, [userid]);
 
     return (
         check ? (
