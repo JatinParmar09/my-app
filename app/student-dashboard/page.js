@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavbarMain from '../../components/NavbarMain';
 import { useSelector } from 'react-redux';
-export const StudentDashboardPage = () => {
+const StudentDashboardPage = () => {
     const [sPresent, setSPresent] = useState(0);
     const[check,setCheck] = useState(false);
     const [error, setError] = useState(null);
