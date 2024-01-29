@@ -6,6 +6,7 @@ function StudentsList({ students, studentsPerPage, currentPage, onPageChange }) 
 
   return (
     <>
+    <div className=" overflow-scroll md:overflow-hidden">
       <table className=" w-full p-5 mr-5">
         <thead>
           <tr className=" border-b-2 border-blue-500">
@@ -26,13 +27,16 @@ function StudentsList({ students, studentsPerPage, currentPage, onPageChange }) 
           ))}
         </tbody>
       </table>
+      </div>
       <Pagination
         totalStudents={students.length}
         studentsPerPage={studentsPerPage}
         currentPage={currentPage}
         onPageChange={onPageChange}
       />
+
     </>
+
   );
 }
 

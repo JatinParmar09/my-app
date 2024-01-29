@@ -10,16 +10,29 @@ const Attendance = () => {
     const headers = {
       Authorization: `Bearer ${cookieValue}`
     }
-     axios.get("https://flipr-yi8b.onrender.com/api/test2",
-     {headers}
-     )
-      .then((response) => {
-        console.log("SUCCESS");
-        setCheck(true);})
-      .catch((error) => {
-        window.location.href = '/';    
-  }
-    ); 
+  //    axios.get("https://flipr-yi8b.onrender.com/api/test2",
+  //    {headers}
+  //    )
+  //     .then((response) => {
+  //       console.log("SUCCESS");
+  //       setCheck(true);})
+  //     .catch((error) => {
+  //       window.location.href = '/';    
+  // }
+  //   ); 
+  axios({
+    method: 'get',
+    url: 'https://flipr-yi8b.onrender.com/auth/test',
+    headers: headers,
+    validateStatus: (status) => {
+       return true; // Always returning true, adjust according to your needs
+    },
+   }).catch(error => {
+    console.error(error.message);
+   }).then(response => {
+        console.log('SUCCESS');
+        setCheck(true);
+   });
   }, []);
 
   return (

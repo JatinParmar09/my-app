@@ -6,29 +6,43 @@ import axios from 'axios';
 import NavbarMain from '../../components/NavbarMain';
 import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
-
+import { FaSun, FaRegMoon } from 'react-icons/fa';
+import { BsQrCode } from "react-icons/bs";
 const DashboardPage = () => {
   const [error, setError] = useState(null);
   const user = useSelector(state => state.user);
-  const[check,setCheck] = useState(false);
-  useEffect( () => {
+  const [check, setCheck] = useState(false);
+  useEffect(() => {
     const cookieValue = document.cookie.split('=')[1];
     const headers = {
       Authorization: `Bearer ${cookieValue}`
     }
-     axios.get('https://flipr-yi8b.onrender.com/api/test2',
-     {headers}
-     )
-      .then((response) => {
-        console.log('SUCCESS');
-        setCheck(true);})
-      .catch((error) => {
-        window.location.href = '/';    
-  }
-    ); 
+    //    axios.get('https://flipr-yi8b.onrender.com/auth/test',
+    //    {headers}
+    //    )
+    //     .then((response) => {
+    //       console.log('SUCCESS');
+    //       setCheck(true);})
+    //     .catch((error) => {
+    //       window.location.href = '/';    
+    // }
+    // ); 
+    axios({
+      method: 'get',
+      url: 'https://flipr-yi8b.onrender.com/auth/test',
+      headers: headers,
+      validateStatus: (status) => {
+        return true; // Always returning true, adjust according to your needs
+      },
+    }).catch(error => {
+      console.error(error.message);
+    }).then(response => {
+      console.log('SUCCESS');
+      setCheck(true);
+    });
   }, []);
-const [data, setData] = useState(0);
-useEffect(() => {
+  const [data, setData] = useState(0);
+  useEffect(() => {
     const cookieValue = document.cookie.split('=')[1];
     const headers = {
       Authorization: `Bearer ${cookieValue}`
@@ -47,8 +61,8 @@ useEffect(() => {
   const [presentStudents, setPresentStudents] = useState(0);
   useEffect(() => {
     const now = new Date();
- const formattedDate = format(now, 'yyyy-MM-dd');
-    axios.post('https://flipr-yi8b.onrender.com/api/total_present',{ date: formattedDate})
+    const formattedDate = format(now, 'yyyy-MM-dd');
+    axios.post('https://flipr-yi8b.onrender.com/api/total_present', { date: formattedDate })
       .then(response => {
         setPresentStudents(response.data.count);
         // console.log(response.data);
@@ -61,126 +75,141 @@ useEffect(() => {
 
   //Absent Students ->
   const [absentStudents, setAbsentStudents] = useState(0);
+  const now = new Date();
   useEffect(() => {
     const now = new Date();
- const formattedDate = format(now, 'yyyy-MM-dd');
-    axios.post('https://flipr-yi8b.onrender.com/api/total_absent',{ date: formattedDate})
+    const formattedDate = format(now, 'yyyy-MM-dd');
+    axios.post('https://flipr-yi8b.onrender.com/api/total_absent', { date: formattedDate })
       .then(response => {
         setAbsentStudents(response.data.count);
-        console.log(response.data);
+        console.log("absent", response.data.count);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
   }, []);
-  console.log('presentStudents',typeof(presentStudents));
+
+
+  console.log('presentStudents', typeof (presentStudents));
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    // Clear interval on component unmount
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const hours = currentDateTime.getHours();
+  const IconComponent = hours < 6 || hours > 18 ? FaRegMoon : FaSun;
+
   return (
     check ? (
-    <>
-      <header>
-        <NavbarMain />
-      </header>
+      <>
+        <header>
+          <NavbarMain />
+        </header>
 
-      <main className='p-5'>
-        <h1 className='text-4xl text-[#012970] font-bold text-center md:text-left'>
-          Admin Dashboard
-        </h1>
-        <p className=' font-extrabold text-[#012970] text-2xl text-center mb-2'>
-          Today's Stats
-        </p>
-        <div className='flex flex-wrap justify-evenly gap-3'>
-          <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
-            <div>Total Students</div>
-            <div>
-              <div className='font-normal'>{data}</div>
-            </div>
-          </div>
-          <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
-            <div>Present | Today</div>
-            <div>
-              <div className='font-normal'>{presentStudents}</div>
-            </div>
-          </div>
-          <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
-            <div>Absent | Today</div>
-            <div>
-              <div className='font-normal'>{absentStudents}</div>
-            </div>
-          </div>
-          <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
-            <div>Attendance | Today</div>
-            <div>
-              <div className='font-normal'>
-                {
-                // ((Number(presentStudents)/Number(data))*100)
-                isNaN(data) || data === 0 ? 'N/A' : ((presentStudents/data)*100).toFixed(1)
-                }%
+        <main className='p-5'>
+
+
+          <div className='p-4 md:px-24 '>
+            <div className='flex flex-col md:flex-row justify-between px-10 items-center'>
+              <h1 className='text-4xl text-blue-900 font-bold text-center md:text-left'>
+                Admin Dashboard
+              </h1>
+              <div className='flex flex-row items-center justify-between content-center gap-2 backdrop-blur-md bg-opacity-70 shadow-sm bg-white rounded-lg p-4 '>
+                <IconComponent className='mb-2 text-4xl align-middle text-yellow-500' />
+                <div className='flex flex-col'>
+                  <span className=' font-extrabold text-blue-900'>{days[currentDateTime.getDay()]}</span>
+                  <span className=' text-blue-900 '>
+                    {currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}
+                  </span>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className='mt-6 grid grid-cols-1 gap-4 md:grid-cols-2'>
-          <Link href='/dashboard/studentlist'>
-            <p className='bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
-              <span>Student Management</span>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                className='h-6 w-6 text-gray-500'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M14 5l7 7m0 0l-7 7m7-7H3'
-                />
-              </svg>
-            </p>
-          </Link>
-          <Link href='/dashboard/attendance'>
-            <p className='bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
-              <span>Attendance Management</span>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                className='h-6 w-6 text-gray-500'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M14 5l7 7m0 0l-7 7m7-7H3'
-                />
-              </svg>
-            </p>
-          </Link>
-          <Link href='/dashboard/qrpage'>
-            <p className='bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
-              <span>Generate QR Code</span>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                className='h-6 w-6 text-gray-500'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M14 5l7 7m0 0l-7 7m7-7H3'
-                />
-              </svg>
-            </p>
-          </Link>
-        </div>
-      </main>
-      <footer></footer>
-    </>): <></>
+
+          {/* <p className=' font-extrabold text-[#012970] text-2xl text-center mb-2'>
+            Today's Stats
+          </p> */}
+          <div className='flex flex-wrap justify-evenly gap-3 p-3 my-4'>
+            <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
+              <div>Total Students</div>
+              <div>
+                <div className='font-normal'>{data}</div>
+              </div>
+            </div>
+            <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
+              <div>Present | Today</div>
+              <div>
+                <div className='font-normal'>{presentStudents}</div>
+              </div>
+            </div>
+            <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
+              <div>Absent | Today</div>
+              <div>
+                <div className='font-normal'>{absentStudents}</div>
+              </div>
+            </div>
+            <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
+              <div>Attendance | Today</div>
+              <div>
+                <div className='font-normal'>
+                  {
+                    // ((Number(presentStudents)/Number(data))*100)
+                    isNaN(data) || data === 0 ? 'N/A' : ((presentStudents / data) * 100).toFixed(1)
+                  }%
+                </div>
+              </div>
+            </div>
+          </div>
+
+            {/* <div className='mt-6 grid grid-cols-1 gap-4 md:grid-cols-2'> */}
+
+          <div className='flex flex-col md:flex-row justify-between px-5 py-2 md:px-40 items-center'>
+            <div className='flex flex-col gap-5 w-fit justify-evenly overflow-hidden'>
+              <Link href='/dashboard/studentlist'>
+                <div className='bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
+                  <span>Student Management</span>
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' className='h-6 w-6 text-gray-500' >
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M14 5l7 7m0 0l-7 7m7-7H3' />
+                  </svg>
+                </div>
+              </Link>
+              <Link href='/dashboard/attendance'>
+                <div className='bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
+                  <span>Attendance Management</span>
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' className='h-6 w-6 text-gray-500' >
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M14 5l7 7m0 0l-7 7m7-7H3' />
+                  </svg>
+                </div>
+              </Link>
+              {/* <Link href='/dashboard/attendance'>
+                <div className='bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
+                  <span>Attendance Management</span>
+                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' className='h-6 w-6 text-gray-500'>
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M14 5l7 7m0 0l-7 7m7-7H3' />
+                  </svg>
+                </div>
+              </Link> */}
+            </div>
+            <div className='w-fit h-fit'>
+              <Link href='/dashboard/qrpage'>
+                <div className='bg-blue-500 text-white shadow-md rounded px-4 py-4 m-4 md:m-0 flex flex-col justify-between items-center overflow-hidden '>
+                  <BsQrCode className='text-4xl' />
+                  <span className=' font-semibold'>Generate QR</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+            {/* </div> */}
+        </main>
+        <footer></footer>
+      </>) : <></>
   );
 };
 

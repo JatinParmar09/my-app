@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import NavbarMain from "../../../components/NavbarMain";
+import { GrAddCircle } from "react-icons/gr";
 
 const StudentList = () => {
   const [useCheck, setUseCheck] = useState(false);
@@ -19,15 +20,28 @@ const StudentList = () => {
     const headers = {
       Authorization: `Bearer ${cookieValue}`,
     };
-    axios
-      .get("https://flipr-yi8b.onrender.com/api/test2", { headers })
-      .then((response) => {
-        console.log("SUCCESS");
-        setUseCheck(true);
-      })
-      .catch((error) => {
-        window.location.href = "/";
-      });
+    // axios
+    //   .get("https://flipr-yi8b.onrender.com/api/test2", { headers })
+    //   .then((response) => {
+    //     console.log("SUCCESS");
+    //     setUseCheck(true);
+    //   })
+    //   .catch((error) => {
+    //     window.location.href = "/";
+    //   });
+    axios({
+      method: 'get',
+      url: 'https://flipr-yi8b.onrender.com/auth/test',
+      headers: headers,
+      validateStatus: (status) => {
+         return true; // Always returning true, adjust according to your needs
+      },
+     }).catch(error => {
+      console.error(error.message);
+     }).then(response => {
+          console.log('SUCCESS');
+          setUseCheck(true);
+     });
   }, []);
 
   useEffect(() => {
@@ -72,7 +86,7 @@ const StudentList = () => {
         </header>
         <main>
           <div className=" w-11/12 m-auto p-4">
-            <div className=" flex flex-row justify-between items-center">
+            <div className=" flex flex-col md:flex-row justify-between items-center">
               <h1 className="text-2xl font-bold mb-4 text-[#012970] ">
                 Student Management
               </h1>
@@ -91,10 +105,10 @@ const StudentList = () => {
                 />
               </div>
               <button
-                className="mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded"
                 onClick={() => setIsFormShown(true)}
               >
-                Add New Student
+                <span className="flex flex-row justify-around items-center gap-1 text-center "><GrAddCircle className="text-xl" /> Add New Student</span>
               </button>
             </div>
             <Studentlist

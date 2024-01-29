@@ -1,8 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 const ResetPassword = () => {
   const router = useRouter();
@@ -18,7 +17,7 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://flipr-yi8b.onrender.com/api/reset-password', { token, password });
+      const response = await axios.post('https://flipr-yi8b.onrender.com/auth/reset_password', { token, newPassword: password });
       console.log(response.data); 
       toast.success('Password reset successful!');
     } catch (error) {
@@ -29,7 +28,6 @@ const ResetPassword = () => {
 
   return (
     <>
-    <ToastContainer/>
       <div className="grid place-items-center h-screen">
         <div className="flex flex-col items-center justify-center bg-white w-96 h-fit rounded-md shadow-lg">
           <form className="flex flex-col gap-4 m-0 p-3 w-96" onSubmit={handleSubmit}>
