@@ -36,16 +36,6 @@ const StudentDashboardPage = () => {
             Authorization: `Bearer ${cookieValue}`
         }
         console.log(headers);
-        // axios.get('https://flipr-yi8b.onrender.com/auth/test2',headers)
-        //     .then((response) => {
-        //         console.log('SUCCESS');
-        //         setCheck(true);
-        //     })
-        //     .catch((error) => {
-        //         // window.location.href = '/';
-        //         console.error(error.message);
-        //     }
-        //     );
         axios({
             method: 'get',
             url: 'https://flipr-yi8b.onrender.com/auth/test2',
@@ -60,11 +50,6 @@ const StudentDashboardPage = () => {
             setCheck(true);
         });
     }, []);
-    // const user = useSelector(state => state.user);
-    // const headers = {
-    //     Authorization: `Bearer ${user.token}`,
-    // };
-
 
     useEffect(() => {
         axios.post('https://flipr-yi8b.onrender.com/api/present_student', { student_id: userid })
@@ -83,10 +68,8 @@ const StudentDashboardPage = () => {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-    }, [userid]);
+    }, []);
 
-    // useEffect(() => {
-    // }, [userid]);
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     useEffect(() => {
         const timer = setInterval(() => {
