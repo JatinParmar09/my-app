@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import { PiStudentDuotone } from "react-icons/pi";
-import { RiAdminFill } from "react-icons/ri";
+import { RiAdminFill, RiAdminLine } from "react-icons/ri";
 export default function Home() {
 
 
