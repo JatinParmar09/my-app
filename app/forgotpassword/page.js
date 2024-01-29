@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar";
 import { toast } from 'sonner';
 import axios from "axios";
 import { useState } from "react";
-export default function forgotpassword() {
+export default function ForgotPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const showToast = (e) => {
     e.preventDefault();
