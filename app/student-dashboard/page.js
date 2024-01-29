@@ -4,33 +4,16 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavbarMain from '../../components/NavbarMain';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useMediaQuery } from 'react-responsive';
-import { CiCamera } from "react-icons/ci";
 import { FaSun, FaRegMoon } from 'react-icons/fa';
 import { MdOutlineQrCodeScanner } from "react-icons/md";
 const StudentDashboardPage = () => {
     const [sPresent, setSPresent] = useState(0);
     const [check, setCheck] = useState(false);
-    const [error, setError] = useState(null);
     const [sAbsent, setSAbsent] = useState(0);
-    // const userid = parseInt(localStorage.getItem('UserID'));
-    // const [userid, setUserid] = useState(0);
     const isLargerThan600 = useMediaQuery({ query: '(min-width: 600px)' });
     const router = useRouter();
-
-    // useEffect(() => {
-    //     if (typeof window !== 'undefined') {
-    //         const storedUserId = localStorage.getItem('UserID');
-    //         if (storedUserId) {
-    //             setUserid(parseInt(storedUserId));
-    //         } else {
-    //             router.push('/login');
-    //         }
-    //     }
-    // }, []);
-    // console.log(userid);
     useEffect(() => {
 
         const cookieValue = document.cookie.split('=')[1];
@@ -44,7 +27,7 @@ const StudentDashboardPage = () => {
             url: 'https://flipr-yi8b.onrender.com/auth/test2',
             headers: headers,
             validateStatus: (status) => {
-                return true; // Always returning true, adjust according to your needs
+                return true; 
             },
         }).catch(error => {
             console.error(error.message);
@@ -58,8 +41,6 @@ const StudentDashboardPage = () => {
         if (typeof window !== 'undefined') {
             const userid = localStorage.getItem('UserID');
             if (userid) {
-                // setUserid(parseInt(storedUserId));
-
                 axios.post('https://flipr-yi8b.onrender.com/api/present_student', { student_id: userid })
                     .then(response => {
                         setSPresent(response.data.totalPresent);
@@ -88,7 +69,6 @@ const StudentDashboardPage = () => {
             setCurrentDateTime(new Date());
         }, 1000);
 
-        // Clear interval on component unmount
         return () => {
             clearInterval(timer);
         };
@@ -120,7 +100,6 @@ const StudentDashboardPage = () => {
                             </div>
                         </div>
                     </div>
-                    {/* <div className=' flex flex-col md:flex-row gap-4 justify-between items-center p-6'> */}
                     <div className='flex justify-center md:justify-end px-5 md:px-40'>
                         <Link className='' href='/student-dashboard/scanner'>
                             <p className='bg-blue-700 text-slate-50 font-semibold hover:bg-blue-900 w-fit shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden ml-auto'>
@@ -132,8 +111,6 @@ const StudentDashboardPage = () => {
                             </p>
                         </Link>
                     </div>
-
-                    {/* </div> */}
                     <p className=' font-extrabold text-[#012970] text-2xl text-center p-6 pt-0'>
                         Today's Stats
                     </p>
