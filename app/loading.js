@@ -5,8 +5,8 @@ import Lottie from "lottie-react";
 const Loading = () => {
   return (
     <>
-    <div className='w-[50vw] h-[50vh]'>
-        <Lottie animationData={loader} loop={true} />
+    <div className='w-5 h-5'>
+        <Lottie animationData={loader} loop={true} className='w-fit h-fit m-auto mt-auto' />
         </div>
     </>
   )
