@@ -1,7 +1,6 @@
 'use client';
 import Navbar from "../../components/Navbar";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'sonner';
 import axios from "axios";
 export default function forgotpassword() {
   const showToast = (e) => {
@@ -11,27 +10,11 @@ export default function forgotpassword() {
       })
       .then((response) => {
         // console.log(response.data);
-        toast.success(response.data.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success(response.data.message);
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(error.message);
         console.error(error);
       });
   };
@@ -41,7 +24,6 @@ export default function forgotpassword() {
       <div>
         <Navbar />
       </div>
-      <ToastContainer />
       <div className="grid place-items-center h-[75vh]">
         <div className="flex flex-col items-center justify-center bg-white w-96 h-fit rounded-md shadow-lg">
           <form
