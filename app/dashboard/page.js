@@ -199,9 +199,9 @@ const DashboardPage = () => {
             </div>
             <div className='w-fit h-fit'>
               <Link href='/dashboard/qrpage'>
-                <div className='bg-blue-500 text-white shadow-md rounded px-4 py-4 m-4 md:m-0 flex flex-col justify-between items-center overflow-hidden '>
+                <div className='bg-blue-500 text-white shadow-md rounded px-4 py-4 m-4 md:m-0 flex flex-col justify-between items-center overflow-hidden hover:border-2 hover:border-blue-500 hover:bg-transparent hover:text-blue-500 '>
                   <BsQrCode className='text-4xl' />
-                  <span className=' font-semibold'>Generate QR</span>
+                  <span className='font-semibold'>Generate QR</span>
                 </div>
               </Link>
             </div>
