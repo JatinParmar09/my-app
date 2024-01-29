@@ -4,29 +4,16 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavbarMain from '../../components/NavbarMain';
-import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import { FaSun, FaRegMoon } from 'react-icons/fa';
 import { BsQrCode } from "react-icons/bs";
 const DashboardPage = () => {
-  const [error, setError] = useState(null);
-  const user = useSelector(state => state.user);
   const [check, setCheck] = useState(false);
   useEffect(() => {
     const cookieValue = document.cookie.split('=')[1];
     const headers = {
       Authorization: `Bearer ${cookieValue}`
     }
-    //    axios.get('https://flipr-yi8b.onrender.com/auth/test',
-    //    {headers}
-    //    )
-    //     .then((response) => {
-    //       console.log('SUCCESS');
-    //       setCheck(true);})
-    //     .catch((error) => {
-    //       window.location.href = '/';    
-    // }
-    // ); 
     axios({
       method: 'get',
       url: 'https://flipr-yi8b.onrender.com/auth/test',
@@ -90,14 +77,12 @@ const DashboardPage = () => {
   }, []);
 
 
-  console.log('presentStudents', typeof (presentStudents));
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentDateTime(new Date());
     }, 1000);
 
-    // Clear interval on component unmount
     return () => {
       clearInterval(timer);
     };
@@ -133,9 +118,6 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          {/* <p className=' font-extrabold text-[#012970] text-2xl text-center mb-2'>
-            Today's Stats
-          </p> */}
           <div className='flex flex-wrap justify-evenly gap-3 p-3 my-4'>
             <div className='bg-white shadow-lg p-6 rounded w-full text-[#012970] font-bold md:w-fit'>
               <div>Total Students</div>
@@ -168,7 +150,6 @@ const DashboardPage = () => {
             </div>
           </div>
 
-            {/* <div className='mt-6 grid grid-cols-1 gap-4 md:grid-cols-2'> */}
 
           <div className='flex flex-col md:flex-row justify-between px-5 py-2 md:px-40 items-center'>
             <div className='flex flex-col gap-5 w-fit justify-evenly overflow-hidden'>
@@ -188,14 +169,6 @@ const DashboardPage = () => {
                   </svg>
                 </div>
               </Link>
-              {/* <Link href='/dashboard/attendance'>
-                <div className='bg-white shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
-                  <span>Attendance Management</span>
-                  <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' className='h-6 w-6 text-gray-500'>
-                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M14 5l7 7m0 0l-7 7m7-7H3' />
-                  </svg>
-                </div>
-              </Link> */}
             </div>
             <div className='w-fit h-fit'>
               <Link href='/dashboard/qrpage'>
@@ -206,7 +179,6 @@ const DashboardPage = () => {
               </Link>
             </div>
           </div>
-            {/* </div> */}
         </main>
         <footer></footer>
       </>) : <></>

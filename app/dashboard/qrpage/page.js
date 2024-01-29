@@ -13,17 +13,6 @@ const QRPage = () => {
     const headers = {
       Authorization: `Bearer ${cookieValue}`
     }
-    // axios.get("https://flipr-yi8b.onrender.com/api/test2",
-    //   { headers }
-    // )
-    //   .then((response) => {
-    //     console.log("SUCCESS");
-    //     setCheck(true);
-    //   })
-    //   .catch((error) => {
-    //     window.location.href = '/';
-    //   }
-    //   );
     axios({
       method: 'get',
       url: 'https://flipr-yi8b.onrender.com/auth/test',

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'sonner';
 const StudentForm = (props) => {
     const [newStudent, setNewStudent] = useState({ student_id: '', name: '', mobile_number: '',email: '',password: ''});
 
@@ -8,11 +9,13 @@ const StudentForm = (props) => {
         event.preventDefault();
         try {
           const response = await axios.post('https://flipr-yi8b.onrender.com/auth/student_signup', newStudent);
+          toast.success('Student added successfully!');
           console.log(response.data);
           // Reset the form
           setNewStudent({ student_id: '', name: '', mobile_number: '',email: '',password: ''});
           props.setIsFormShown(false);
         } catch (error) {
+          toast.error(error.message);
           console.error(error);
         }
       };

@@ -4,13 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import Footer from "./Footer";
-import { UseDispatch, useDispatch } from "react-redux";
-import { setUserData, setAuthStatus, setValidationError } from "../app/actions";
 const LoginForm = ({ value }) => {
-  const dispatch = useDispatch();
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -38,16 +33,6 @@ const LoginForm = ({ value }) => {
       );
       if (response.status === 200 && response.data.token) {
         router.push("/dashboard");
-        dispatch(
-          setUserData(
-            response.data.token,
-            response.data.name,
-            email,
-            response.data.userID
-          )
-        );
-        dispatch(setAuthStatus(true));
-        dispatch(setValidationError(""));
         localStorage.setItem("UserID", JSON.stringify(response.data.userID));
         localStorage.setItem("username", JSON.stringify(response.data.name));
         document.cookie = `token=${response.data.token}; HttpOnly:  SameSite=None; Secure;`;
@@ -92,17 +77,6 @@ const LoginForm = ({ value }) => {
       if (response.status === 200 && response.data.accessToken) {
         router.push("/student-dashboard");
         console.log(response.data);
-
-        dispatch(
-          setUserData(
-            response.data.accessToken,
-            response.data.name,
-            email,
-            response.data.userID
-          )
-        );
-        dispatch(setAuthStatus(true));
-        dispatch(setValidationError(""));
         localStorage.setItem("UserID", JSON.stringify(response.data.userID));
         localStorage.setItem("username", JSON.stringify(response.data.name));
         document.cookie = `accessToken=${response.data.accessToken}`;
@@ -117,9 +91,7 @@ const LoginForm = ({ value }) => {
       console.error("Login failed with error ", error);
 
       if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
+        console.log(error.response);
       } else if (error.request) {
         console.log(error.request);
       } else {
@@ -131,7 +103,6 @@ const LoginForm = ({ value }) => {
     setIsLoading(false);
   };
 
-  // console.log("value: ",typeof(value));
   return (
     <>
       <div>
@@ -173,13 +144,6 @@ const LoginForm = ({ value }) => {
                   className=" block w-full bg-white rounded-md border-0 p-1 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
               </label>
-
-              {/* <button
-                type="submit"
-                className="bg-[#4154F1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Sign in
-              </button> */}
               <button
                 type="submit"
                 disabled={isLoading}

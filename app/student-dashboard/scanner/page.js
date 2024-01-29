@@ -3,8 +3,6 @@ import { React, useEffect, useState, useRef, useCallback } from 'react'
 import QRScanner from 'qr-scanner';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 const Scanner = () => {
 
@@ -32,19 +30,13 @@ const Scanner = () => {
   const router = useRouter();
   const [hasScanned, setHasScanned] = useState(false);
   const videoRef = useRef();
-  let scanning = false;
 
-  //   const handleSuccess = useCallback(() => {
-  //     toast.success('QR Code scan successful!');
-  //     setTimeout(() => {
-  //       router.push('/student-dashboard');
-  //    }, 1000);
-  // }, []);
+  let scanning = false;
+  
   const handleSuccess = useCallback(() => {
     if (scanning) {
       return;
     }
-
     scanning = true;
     toast.success('QR Code scan successful!');
     router.push('/student-dashboard');
@@ -99,7 +91,6 @@ const Scanner = () => {
   return (
     check ? (
       <>
-        <ToastContainer />
         <div className='flex flex-col justify-center items-center p-5'>
           <p className='text-2xl text-blue-700 font-semibold'>Scan the QR Code</p>
           <div className=' flex justify-center place-items-center h-[75vh]'>

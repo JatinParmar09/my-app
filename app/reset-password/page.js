@@ -2,10 +2,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   function getTokenFromURL() {
     if (typeof window !== "undefined") {
     const urlParams = new URLSearchParams(window.location.search);
