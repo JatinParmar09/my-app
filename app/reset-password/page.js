@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 const ResetPassword = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   function getTokenFromURL() {
     if (typeof window !== "undefined") {
@@ -16,6 +17,7 @@ const ResetPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await axios.post('https://flipr-yi8b.onrender.com/auth/reset_password', { token, newPassword: password });
       console.log(response.data); 
@@ -24,6 +26,7 @@ const ResetPassword = () => {
       console.error(error);
       toast.error('password reset failed');
     }
+    setIsLoading(false);
   };
 
   return (
@@ -43,11 +46,12 @@ const ResetPassword = () => {
               />
             </label>
             <button
-              type="submit"
-              className="bg-[#4154F1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Confirm!
-            </button>
+                type="submit"
+                disabled={isLoading}
+                className={`${isLoading ? 'cursor-wait' : ''} bg-[#4154F1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+              >
+                {isLoading ? 'Loading...' : 'Update Password'}
+              </button>
           </form>
         </div>
       </div>
