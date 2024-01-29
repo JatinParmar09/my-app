@@ -3,6 +3,7 @@ import "./globals.css";
 import ReduxProvider from "./ReduxProvider";
 import { Suspense } from "react";
 import Loading from "./loading"
+import { Toaster } from 'sonner';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <Suspense fallback={<Loading />} >
         <body className={inter.className}>
           {children}
+          <Toaster richColors position="top-right" />
           </body>
           </Suspense>
       </html>

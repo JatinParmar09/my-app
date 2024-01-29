@@ -105,7 +105,10 @@
   "react-use-websocket": "^4.5.0",
   
     
-  "redux": "^5.0.1"
+  "redux": "^5.0.1",
+  
+    
+  "sonner": "^1.4.0"
   
   },
   

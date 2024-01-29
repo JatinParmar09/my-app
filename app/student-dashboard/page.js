@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useMediaQuery } from 'react-responsive';
 import { CiCamera } from "react-icons/ci";
+import { FaSun, FaRegMoon } from 'react-icons/fa';
+import { MdOutlineQrCodeScanner } from "react-icons/md";
 const StudentDashboardPage = () => {
     const [sPresent, setSPresent] = useState(0);
     const [check, setCheck] = useState(false);
@@ -49,14 +51,14 @@ const StudentDashboardPage = () => {
             url: 'https://flipr-yi8b.onrender.com/auth/test2',
             headers: headers,
             validateStatus: (status) => {
-               return true; // Always returning true, adjust according to your needs
+                return true; // Always returning true, adjust according to your needs
             },
-           }).catch(error => {
+        }).catch(error => {
             console.error(error.message);
-           }).then(response => {
-                console.log('SUCCESS');
-                setCheck(true);
-           });
+        }).then(response => {
+            console.log('SUCCESS');
+            setCheck(true);
+        });
     }, []);
     // const user = useSelector(state => state.user);
     // const headers = {
@@ -85,7 +87,20 @@ const StudentDashboardPage = () => {
 
     // useEffect(() => {
     // }, [userid]);
+    const [currentDateTime, setCurrentDateTime] = useState(new Date());
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentDateTime(new Date());
+        }, 1000);
 
+        // Clear interval on component unmount
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const hours = currentDateTime.getHours();
+    const IconComponent = hours < 6 || hours > 18 ? FaRegMoon : FaSun;
     return (
         check ? (
             <>
@@ -94,22 +109,36 @@ const StudentDashboardPage = () => {
                 </header>
 
                 <main className='p-5'>
-                    <div className=' flex flex-col md:flex-row gap-4 justify-between items-center p-6'>
-                        <h1 className='text-4xl text-[#012970] font-bold text-center md:text-left'>
-                            Student Dashboard
-                        </h1>
-                        <div className='w-fit'>
-                            <Link className='' href='/student-dashboard/scanner'>
-                                <p className='bg-blue-700 text-slate-50 font-semibold hover:bg-blue-900 w-fit  shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden'>
-                                    {isLargerThan600 ? (
-                                        <span className="">QR Scanner</span>
-                                    ) : (
-                                        <span className=" "><CiCamera /></span>
-                                    )}
-                            </p>
-                            </Link>
+                    <div className='p-4 md:px-24 '>
+                        <div className='flex flex-col md:flex-row justify-between px-10 items-center'>
+                            <h1 className='text-4xl text-blue-900 font-bold text-center md:text-left'>
+                                Student Dashboard
+                            </h1>
+                            <div className='flex flex-row items-center justify-between content-center gap-2 backdrop-blur-md bg-opacity-70 shadow-sm bg-white rounded-lg p-4 '>
+                                <IconComponent className='mb-2 text-4xl align-middle text-yellow-500' />
+                                <div className='flex flex-col'>
+                                    <span className=' font-extrabold text-blue-900'>{days[currentDateTime.getDay()]}</span>
+                                    <span className=' text-blue-900 '>
+                                        {currentDateTime.toLocaleDateString()} {currentDateTime.toLocaleTimeString()}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    {/* <div className=' flex flex-col md:flex-row gap-4 justify-between items-center p-6'> */}
+                    <div className='flex justify-center md:justify-end px-5 md:px-40'>
+                        <Link className='' href='/student-dashboard/scanner'>
+                            <p className='bg-blue-700 text-slate-50 font-semibold hover:bg-blue-900 w-fit shadow-md rounded px-4 py-2 flex justify-between items-center overflow-hidden ml-auto'>
+                                {isLargerThan600 ? (
+                                    <span className="flex flex-row items-center justify-between gap-1"><MdOutlineQrCodeScanner className='text-2xl' />QR Scanner</span>
+                                ) : (
+                                    <span className=" "><MdOutlineQrCodeScanner className='text-2xl'/></span>
+                                )}
+                            </p>
+                        </Link>
+                    </div>
+
+                    {/* </div> */}
                     <p className=' font-extrabold text-[#012970] text-2xl text-center p-6 pt-0'>
                         Today's Stats
                     </p>

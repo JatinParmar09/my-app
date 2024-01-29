@@ -1,7 +1,7 @@
 'use client'
 import { React, useEffect, useState, useRef, useCallback } from 'react'
 import QRScanner from 'qr-scanner';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,20 +59,11 @@ const Scanner = () => {
   //  }, 4000);
   //  };
   const handleSuccess = useCallback(() => {
-    toast.success('QR Code scan successful!', {
-       position: 'top-right',
-       autoClose: 2000,
-       hideProgressBar: false,
-       closeOnClick: true,
-       pauseOnHover: true,
-       draggable: true,
-       progress: undefined,
-    });
+    toast.success('QR Code scan successful!');
     setTimeout(() => {
       router.push('/student-dashboard');
       toast.dismiss();
-      setHasScanned(true);
-   }, 2000);
+   }, 1000);
 }, []);
    
   useEffect(() => {
@@ -98,7 +89,10 @@ const Scanner = () => {
             axios.post('https://flipr-yi8b.onrender.com/api/mark_attendance', {
               student_id: userid,
               qr_id: result
-            }).then((response) => {console.log('Success')})
+            }).then((response) => {
+              console.log('Success')
+              setHasScanned(true);
+            })
             .catch((error) => {console.log('Error')});
             // router.push('/student-dashboard');
           }

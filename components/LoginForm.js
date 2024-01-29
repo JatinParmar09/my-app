@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from 'sonner';
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Footer from "./Footer";
@@ -15,27 +15,11 @@ const LoginForm = ({value}) => {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const handleSuccess = () => {
-    toast.success("Login successful!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.success("Login successful!");
   };
 
   const handleError = () => {
-    toast.error("Login failed. Invalid credentials.", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.error("Login failed. Invalid credentials.");
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -204,7 +188,7 @@ const LoginForm = ({value}) => {
        
       </div>
       </div>
-      <ToastContainer />
+
     </>
   );
 };
