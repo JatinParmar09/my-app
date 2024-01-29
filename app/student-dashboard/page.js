@@ -16,36 +16,29 @@ const StudentDashboardPage = () => {
     const [error, setError] = useState(null);
     const [sAbsent, setSAbsent] = useState(0);
     // const userid = parseInt(localStorage.getItem('UserID'));
-    const [userid, setUserid] = useState(0);
+    // const [userid, setUserid] = useState(0);
     const isLargerThan600 = useMediaQuery({ query: '(min-width: 600px)' });
     const router = useRouter();
 
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         const storedUserId = localStorage.getItem('UserID');
+    //         if (storedUserId) {
+    //             setUserid(parseInt(storedUserId));
+    //         } else {
+    //             router.push('/login');
+    //         }
+    //     }
+    // }, []);
+    // console.log(userid);
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const storedUserId = localStorage.getItem('UserID');
-            if (storedUserId) {
-                setUserid(parseInt(storedUserId));
-            } else {
-                router.push('/login');
-            }
-        }
-    }, []);
-    useEffect(() => {
+
         const cookieValue = document.cookie.split('=')[1];
+        console.log(cookieValue);
         const headers = {
             Authorization: `Bearer ${cookieValue}`
         }
         console.log(headers);
-        // axios.get('https://flipr-yi8b.onrender.com/auth/test2',headers)
-        //     .then((response) => {
-        //         console.log('SUCCESS');
-        //         setCheck(true);
-        //     })
-        //     .catch((error) => {
-        //         // window.location.href = '/';
-        //         console.error(error.message);
-        //     }
-        //     );
         axios({
             method: 'get',
             url: 'https://flipr-yi8b.onrender.com/auth/test2',
@@ -60,33 +53,35 @@ const StudentDashboardPage = () => {
             setCheck(true);
         });
     }, []);
-    // const user = useSelector(state => state.user);
-    // const headers = {
-    //     Authorization: `Bearer ${user.token}`,
-    // };
-
 
     useEffect(() => {
-        axios.post('https://flipr-yi8b.onrender.com/api/present_student', { student_id: userid })
-            .then(response => {
-                setSPresent(response.data.totalPresent);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-        axios.post('https://flipr-yi8b.onrender.com/api/absent_student', { student_id: userid })
-            .then(response => {
-                setSAbsent(response.data.totalAbsent);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, [userid]);
+        if (typeof window !== 'undefined') {
+            const userid = localStorage.getItem('UserID');
+            if (userid) {
+                // setUserid(parseInt(storedUserId));
 
-    // useEffect(() => {
-    // }, [userid]);
+                axios.post('https://flipr-yi8b.onrender.com/api/present_student', { student_id: userid })
+                    .then(response => {
+                        setSPresent(response.data.totalPresent);
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+                axios.post('https://flipr-yi8b.onrender.com/api/absent_student', { student_id: userid })
+                    .then(response => {
+                        setSAbsent(response.data.totalAbsent);
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            } else {
+                router.push('/login');
+            }
+        }
+    }, []);
+
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     useEffect(() => {
         const timer = setInterval(() => {
@@ -132,7 +127,7 @@ const StudentDashboardPage = () => {
                                 {isLargerThan600 ? (
                                     <span className="flex flex-row items-center justify-between gap-1"><MdOutlineQrCodeScanner className='text-2xl' />QR Scanner</span>
                                 ) : (
-                                    <span className=" "><MdOutlineQrCodeScanner className='text-2xl'/></span>
+                                    <span className=" "><MdOutlineQrCodeScanner className='text-2xl' /></span>
                                 )}
                             </p>
                         </Link>
