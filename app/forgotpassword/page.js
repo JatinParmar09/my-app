@@ -2,9 +2,12 @@
 import Navbar from "../../components/Navbar";
 import { toast } from 'sonner';
 import axios from "axios";
+import { useState } from "react";
 export default function forgotpassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const showToast = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     axios.post("https://flipr-yi8b.onrender.com/api/email", {
         email: e.target.name.value,
       })
@@ -17,6 +20,7 @@ export default function forgotpassword() {
         toast.error(error.message);
         console.error(error);
       });
+      setIsLoading(false);
   };
 
   return (
@@ -40,11 +44,13 @@ export default function forgotpassword() {
                 name="name"
                 id="name"
               />
-            <button
-              type="submit"
-              className="bg-[#4154F1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Confirm!
-            </button>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`${isLoading ? 'cursor-wait' : ''} bg-[#4154F1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+              >
+                {isLoading ? 'Loading...' : 'Send Email'}
+              </button>
           </form>
         </div>
       </div>
